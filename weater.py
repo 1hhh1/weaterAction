@@ -20,7 +20,7 @@ def ServerPush(info): #Server酱推送
     title = u"天气推送"
     content = info.replace('\n','\n\n')
     data = {
-        "text": title,
+        "title": title,
         "desp": content
     }
     print(content)
