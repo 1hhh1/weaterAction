@@ -6,6 +6,7 @@ import os
 
 #新冠肺炎推送start
 
+
 def print_hi():
     # 在下面的代码行中使用断点来调试脚本。
     # print(f'Hi, {name}')  # 按 Ctrl+F8 切换断点。
@@ -26,12 +27,12 @@ def print_hi():
 
     # print(json33)
 
-    text="\n\t\t\t\t中国新冠疫情汇总\n"+\
-        "\t\t总-共确认："+str(total__["confirm"])+"例\t"+"治愈："+str(total__["heal"])+"例\t"+""+"境外输入："+str(total__["input"])+"例\t"+"\n"+\
-         "\t\t今-天确认：" + str(today["confirm"]) + "例\t\t" + "治愈：" + str(today["heal"]) + "例\t\t" + "" + "境外输入：" + str(today["input"]) + "例\t" + "\n" +\
-         "\t\t总-无症状：" +str(extData["noSymptom"]) +"例\t\t" +"今天："+str(extData["incrNoSymptom"])+"例\t\n"+ \
-         "\t\t\t\t江苏省各地疫情汇总\n" +\
-        "\t\t最后更新时间："+json22["lastUpdateTime"];
+    text="\n\t\t中国新冠疫情汇总\n"+\
+        "总-共确认："+str(total__["confirm"])+"例\t"+"治愈："+str(total__["heal"])+"例\t"+""+"境外输入："+str(total__["input"])+"例\t"+"\n"+\
+         "今-天确认：" + str(today["confirm"]) + "例\t\t" + "治愈：" + str(today["heal"]) + "例\t\t" + "" + "境外输入：" + str(today["input"]) + "例\t" + "\n" +\
+         "总-无症状：" +str(extData["noSymptom"]) +"例\t\t" +"今天："+str(extData["incrNoSymptom"])+"例\t\n"+ \
+         "\t\t江苏省各地疫情汇总\n" +\
+        "最后更新时间："+json22["lastUpdateTime"];
     # print(text)
     test =text + \
         printMyTest(get_json(json22["children"], "南京"))+\
@@ -55,11 +56,11 @@ def printMyTest(x):
     today = x["today"]
     total__ = x["total"]
     extData = x["extData"]
-    text = "\n\t\t\t\t"+x["name"]+"新冠疫情汇总\n" + \
-            "\t\t\t"+x["lastUpdateTime"]+"\n"+\
-           "\t\t总-共确认：" + str(total__["confirm"]) + "例\t\t" + "治愈：" + str(total__["heal"]) + "例\t\n" + \
-           "\t\t今-天确认：" + str(today["confirm"]) + "例\t\t" + "治愈：" + str(today["heal"]) + "例\t\t\n"  + \
-           "\t\t总-无症状：" + str(isKey("noSymptom",extData)) + "例\t\t" + "今天：" + str(isKey("incrNoSymptom",extData)) + "例\t"
+    text = "\n\t\t"+x["name"]+"新冠疫情汇总\n" + \
+            "\t"+x["lastUpdateTime"]+"\n"+\
+           "总-共确认：" + str(total__["confirm"]) + "例\t\t" + "治愈：" + str(total__["heal"]) + "例\t\n" + \
+           "今-天确认：" + str(today["confirm"]) + "例\t\t" + "治愈：" + str(today["heal"]) + "例\t\t\n"  + \
+           "总-无症状：" + str(isKey("noSymptom",extData)) + "例\t\t" + "今天：" + str(isKey("incrNoSymptom",extData)) + "例\t"
     # print(text)
     return text
 
