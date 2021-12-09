@@ -4,6 +4,76 @@
 import requests, json
 import os
 
+#新冠肺炎推送start
+
+def print_hi():
+    # 在下面的代码行中使用断点来调试脚本。
+    # print(f'Hi, {name}')  # 按 Ctrl+F8 切换断点。
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                             'Chrome/51.0.2704.63 Safari/537.36'}
+    response = requests.get("https://c.m.163.com/ug/api/wuhan/app/data/list-total",headers=headers)
+    # print(response)
+    data = response.json()
+    total_ = data["data"]["chinaTotal"]
+    total__= total_["total"]
+    today = total_["today"]
+    extData = total_["extData"]
+    areaTree_= data["data"]["areaTree"]
+    # print(areaTree_)
+    json11 = get_json(areaTree_, "中国")
+    json22 = get_json(json11["children"], "江苏")
+
+
+    # print(json33)
+
+    text="\n\t\t\t\t中国新冠疫情汇总\n"+\
+        "\t\t总-共确认："+str(total__["confirm"])+"例\t"+"治愈："+str(total__["heal"])+"例\t"+""+"境外输入："+str(total__["input"])+"例\t"+"\n"+\
+         "\t\t今-天确认：" + str(today["confirm"]) + "例\t\t" + "治愈：" + str(today["heal"]) + "例\t\t" + "" + "境外输入：" + str(today["input"]) + "例\t" + "\n" +\
+         "\t\t总-无症状：" +str(extData["noSymptom"]) +"例\t\t" +"今天："+str(extData["incrNoSymptom"])+"例\t\n"+ \
+         "\t\t\t\t江苏省各地疫情汇总\n" +\
+        "\t\t最后更新时间："+json22["lastUpdateTime"];
+    # print(text)
+    test =text + \
+        printMyTest(get_json(json22["children"], "南京"))+\
+        printMyTest(get_json(json22["children"], "泰州"))+\
+        printMyTest(get_json(json22["children"], "南通"))+\
+        printMyTest(get_json(json11["children"], "上海"))+\
+        printMyTest(get_json(json22["children"], "盐城"));
+
+    print(test)
+    return test
+
+
+#打开json数组，获得特定变量
+def get_json(x,str):
+   for i in x:
+       if i["name"] == str:
+           # print(i)
+           return i
+def printMyTest(x):
+    # print(x)
+    today = x["today"]
+    total__ = x["total"]
+    extData = x["extData"]
+    text = "\n\t\t\t\t"+x["name"]+"新冠疫情汇总\n" + \
+            "\t\t\t"+x["lastUpdateTime"]+"\n"+\
+           "\t\t总-共确认：" + str(total__["confirm"]) + "例\t\t" + "治愈：" + str(total__["heal"]) + "例\t\n" + \
+           "\t\t今-天确认：" + str(today["confirm"]) + "例\t\t" + "治愈：" + str(today["heal"]) + "例\t\t\n"  + \
+           "\t\t总-无症状：" + str(isKey("noSymptom",extData)) + "例\t\t" + "今天：" + str(isKey("incrNoSymptom",extData)) + "例\t"
+    # print(text)
+    return text
+
+def isKey(key,json):
+    if (key in json):
+        return json[key]
+    else:
+         return "--"
+        # 按间距中的绿色按钮以运行脚本。
+
+        
+#新冠肺炎推送end
+
+
 SCKEY=os.environ.get('SCKEY') ##Server酱推送KEY
 # SKey=os.environ.get('SKEY') #CoolPush酷推KEY
 def get_iciba_everyday():
@@ -63,7 +133,7 @@ def main():
                    "\n风力风向: " + fx + fl + "\n感冒指数: "  + ganmao + "\n温馨提示： " + tips + "\n更新时间: " + update_time + "\n✁-----------------------------------------\n" + get_iciba_everyday()
             print(tdwt)
             # requests.post(cpurl,tdwt.encode('utf-8'))         #把天气数据转换成UTF-8格式，不然要报错。
-            ServerPush(tdwt)
+            ServerPush(tdwt+print_hi())
 #             CoolPush(tdwt)
     except Exception:
         error = '【出现错误】\n　　今日天气推送错误，请检查服务或网络状态！'
