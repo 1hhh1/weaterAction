@@ -4,7 +4,7 @@
 import requests, json
 import os
 
-#新冠肺炎推送start
+#新冠肺炎推送startdd
 
 
 def print_hi():
